@@ -1,5 +1,5 @@
 {% set name = "jbpy" %}
-{% set version = "0.6.0" %}
+{% set version = "0.6.1" %}
 {% set python_min = "3.11" %}
 
 package:
@@ -8,7 +8,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/jbpy-{{ version }}.tar.gz
-  sha256: 465db7932ee02830e0adffc50bd78d7e078a86ffc73a017f40791d9e98aae66b
+  sha256: 23efac30cbbae33e4318eb71f073825b0b7a6578335479e34bb61451406dc523
 
 build:
   entry_points:
