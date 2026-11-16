@@ -1,0 +1,65 @@
+schema_version: 1
+
+context:
+  name: jbpy
+  version: "0.7.0"
+
+package:
+  name: ${{ name|lower }}
+  version: ${{ version }}
+
+source:
+  url: https://files.pythonhosted.org/packages/source/${{ name[0] }}/${{ name }}/jbpy-${{ version }}.tar.gz
+  sha256: 997e3e1e8ffa3c1e23ed06b6dc731170712aa0f6aad7d69f95280e3ab51a9e68
+
+build:
+  number: 1
+  noarch: python
+  script: ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  python:
+    entry_points:
+      - jbpinfo = jbpy._jbpinfo:main
+      - jbpdump = jbpy._jbpdump:main
+
+requirements:
+  host:
+    - python ${{ python_min }}.*
+    - setuptools >=77
+    - setuptools-scm >=8
+    - pip
+  run:
+    - python >=${{ python_min }}
+  run_constraints:
+    - numpy >2.1.0
+
+tests:
+  - python:
+      imports:
+        - jbpy
+        - jbpy.core
+        - jbpy.image_data
+      pip_check: true
+      python_version:
+        - ${{ python_min }}.*
+        - "*"
+  - requirements:
+      run:
+        - python ${{ python_min }}.*
+        - pip
+    script:
+      - jbpinfo --help
+      - jbpdump --help
+
+about:
+  summary: Library for reading and writing Joint BIIF Profile (JBP) files (NITF and NSIF)
+  license: MIT
+  license_file: LICENSE
+  homepage: https://pypi.org/project/jbpy/
+  documentation: https://jbpy.readthedocs.io/
+  repository: https://github.com/ValkyrieSystems/jbpy
+
+extra:
+  recipe-maintainers:
+    - pressler-vsc
+    - bombaci-vsc
+    - johnstob
